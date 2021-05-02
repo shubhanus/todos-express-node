@@ -19,13 +19,31 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      uid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "User Name is required" },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Password is required" },
+        },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Email is required" },
+          isEmail: { msg: "Email should be proper format abc@abc.com" },
+        },
       },
       role: {
         type: DataTypes.STRING,
@@ -36,6 +54,16 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "users",
       modelName: "User",
+      defaultScope: {
+        attributes: { exclude: ["password", "id"] },
+      },
+      scopes: {
+        withSecretColumns: {
+          attributes: {
+            include: ["id", "password"],
+          },
+        },
+      },
     }
   );
   return User;

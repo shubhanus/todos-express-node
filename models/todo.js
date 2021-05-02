@@ -18,12 +18,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           allowNull: false,
           name: "userId",
+          as: 'user'
         },
       });
     }
   }
   Todo.init(
     {
+      uid: {
+        type: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
+      },
       text: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -38,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "todos",
       modelName: "Todo",
+      defaultScope: {
+        attributes: {
+          exclude: ["id", "userId", 'uid'],
+        },
+      },
     }
   );
   return Todo;
