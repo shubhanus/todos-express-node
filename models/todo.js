@@ -4,8 +4,6 @@ const enums = require("../enum");
 
 const todoValues = enums.TODO_STATUS_ENUM.getValues();
 
-console.log(todoValues);
-
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -18,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           allowNull: false,
           name: "userId",
-          as: 'user'
+          as: "user",
         },
       });
     }
@@ -45,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Todo",
       defaultScope: {
         attributes: {
-          exclude: ["id", "userId", 'uid'],
+          exclude: ["id", "userId", "uid"],
         },
       },
     }
