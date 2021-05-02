@@ -1,4 +1,6 @@
 {
+  "name": "todo-express-app",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon ./app.js"
   },
