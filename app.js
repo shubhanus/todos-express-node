@@ -1,73 +1,28 @@
-const express = require("express");
-const { sequelize, User, Todo } = require("./models");
+import express from 'express';
+import { sequelize } from './models';
+import * as userController from './controllers/user.controller';
+import * as todoController from './controllers/todo.controller';
+import apiAuth from './middlewares/apiAuth';
+import adminAuth from './middlewares/adminAuth';
 
 const app = express();
 
+// middleware
 app.use(express.json());
 
-app.post("/user", async (req, res) => {
-  const { name, role } = req.body;
+// Routes
+app.post('/user', userController.create);
+app.post('/login', userController.login);
 
-  try {
-    const user = await User.create({
-      name,
-      role,
-    });
+app.get('/users', apiAuth, adminAuth, userController.getAll);
 
-    return res.status(201).json(user);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-});
-
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.findAll();
-    return res.json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-});
-
-app.post("/todo", async (req, res) => {
-  const { userId, text } = req.body;
-  // FIXME: get user id from JWT token
-  try {
-    const todo = await Todo.create({
-      text,
-      userId,
-    });
-
-    return res.status(201).json(todo);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
-  }
-});
-
-app.get("/todos/:userId", async (req, res) => {
-  const { userId } = req.params;
-  //TODO: validate userId
-  // console.log(req);
-  try {
-    const todos = await Todo.findAll({
-      where: {
-        userId,
-      },
-    });
-    return res.json(todos);
-    ƒ;
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
-  }
-});
+app.post('/todo', apiAuth, todoController.create);
+app.put('/todo/:id', apiAuth, todoController.updateTodo);
+app.get('/todos', apiAuth, todoController.getAllByUser);
 
 const port = 5000;
 app.listen({ port }, async () => {
   console.log(`server started at ${port}`);
   await sequelize.authenticate();
-  console.log(`Database started`);
+  console.log('Database started');
 });

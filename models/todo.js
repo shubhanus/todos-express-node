@@ -1,10 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
-const enums = require("../enum");
+'use strict';
 
-const todoValues = enums.TODO_STATUS_ENUM.getValues();
-
-console.log(todoValues);
+import { Model } from 'sequelize';
+import { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } from '../enum';
 
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -17,28 +14,38 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, {
         foreignKey: {
           allowNull: false,
-          name: "userId",
+          name: 'userId',
+          as: 'user',
         },
       });
     }
   }
   Todo.init(
     {
+      uid: {
+        type: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
+      },
       text: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM(todoValues),
+        type: DataTypes.ENUM(TODO_STATUS_ENUM_VALUES),
         allowNull: false,
-        defaultValue: todoValues[0],
+        defaultValue: TODO_STATUS_ENUM.todo,
       },
     },
     {
       sequelize,
-      tableName: "todos",
-      modelName: "Todo",
-    }
+      tableName: 'todos',
+      modelName: 'Todo',
+      defaultScope: {
+        attributes: {
+          exclude: ['userId', 'uid'],
+        },
+      },
+    },
   );
   return Todo;
 };

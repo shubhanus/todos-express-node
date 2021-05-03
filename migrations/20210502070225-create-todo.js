@@ -1,11 +1,10 @@
-"use strict";
-const enums = require("../enum");
+'use strict';
 
-const todoValues = enums.TODO_STATUS_ENUM.getValues();
+import { TODO_STATUS_ENUM_VALUES } from '../enum';
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("Todos", {
+    await queryInterface.createTable('Todos', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,9 +20,9 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(TODO_STATUS_ENUM_VALUES),
         allowNull: false,
-        defaultValue: todoValues[0],
+        defaultValue: TODO_STATUS_ENUM_VALUES[0],
       },
       createdAt: {
         allowNull: false,
@@ -35,7 +34,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("Todos");
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('Todos');
   },
 };

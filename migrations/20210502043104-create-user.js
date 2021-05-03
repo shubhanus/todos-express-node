@@ -1,32 +1,36 @@
 'use strict';
+
+import { USER_ROLES_ENUM_VALUES, USER_ROLES_ENUM } from '../enum';
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER,
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
         allowNull: false,
       },
       role: {
-        type: Sequelize.STRING,
+        type: DataTypes.ENUM(USER_ROLES_ENUM_VALUES),
         allowNull: false,
+        defaultValue: USER_ROLES_ENUM.user,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: DataTypes.DATE,
+      },
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Users');
-  }
+  },
 };
