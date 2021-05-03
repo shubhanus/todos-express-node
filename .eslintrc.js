@@ -28,5 +28,6 @@ module.exports = {
     'consistent-return': 'off',
     'arrow-body-style': 'off',
     strict: 'off',
+    'implicit-arrow-linebreak': 'off',
   },
 };

@@ -13,7 +13,7 @@ export const errorResponse = (
   res,
   errorMessage = 'Something went wrong',
   code = 500,
-  error = {}
+  error = {},
 ) =>
   res.status(code).json({
     code,
