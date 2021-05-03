@@ -1,5 +1,5 @@
-import { successResponse, errorResponse } from "../helpers";
-import { Todo } from "../models";
+import { successResponse, errorResponse } from '../helpers';
+import { Todo } from '../models';
 
 export const create = async (req, res) => {
   const {
@@ -13,7 +13,7 @@ export const create = async (req, res) => {
       userId: user.id,
     });
 
-    return res.status(201).json({ msg: "created successfully" });
+    return res.status(201).json({ msg: 'created successfully' });
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -32,7 +32,6 @@ export const getAllByUser = async (req, res) => {
       // include: [{ model: User, as: "user" }], // FIXME
     });
     return res.json(todos);
-    ƒ;
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -55,7 +54,7 @@ export const updateTodo = async (req, res) => {
     });
 
     if (!todo) {
-      return errorResponse(req, res, "Invalid todo id", 404);
+      return errorResponse(req, res, 'Invalid todo id', 404);
     }
 
     if (text) {
@@ -67,7 +66,7 @@ export const updateTodo = async (req, res) => {
 
     await todo.save();
 
-    return successResponse(req, res, { msg: "Updated successfully" });
+    return successResponse(req, res, { msg: 'Updated successfully' });
   } catch (error) {
     errorResponse(req, res);
   }

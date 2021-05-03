@@ -1,9 +1,10 @@
-"use strict";
-import { TODO_STATUS_ENUM_VALUES } from "../enum";
+'use strict';
+
+import { TODO_STATUS_ENUM_VALUES } from '../enum';
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("Todos", {
+    await queryInterface.createTable('Todos', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -33,7 +34,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("Todos");
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('Todos');
   },
 };

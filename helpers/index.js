@@ -1,5 +1,5 @@
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export const successResponse = (req, res, data, code = 200) =>
   res.send({
@@ -11,7 +11,7 @@ export const successResponse = (req, res, data, code = 200) =>
 export const errorResponse = (
   req,
   res,
-  errorMessage = "Something went wrong",
+  errorMessage = 'Something went wrong',
   code = 500,
   error = {}
 ) =>
@@ -35,13 +35,13 @@ export const validateFields = (object, fields) => {
       errors.push(f);
     }
   });
-  return errors.length ? `${errors.join(", ")} are required fields.` : "";
+  return errors.length ? `${errors.join(', ')} are required fields.` : '';
 };
 
 export const getPasswordHash = (password) =>
-  crypto.createHash("md5").update(password).digest("hex");
+  crypto.createHash('md5').update(password).digest('hex');
 
-export const secret = "adasxovnklnqklnkjdsankdnw"; // FIXME: move to env
+export const secret = 'adasxovnklnqklnkjdsankdnw'; // FIXME: move to env
 
 export const getJwtSignedToken = (user) =>
   jwt.sign({ user: { ...user, createdAt: new Date() } }, secret);

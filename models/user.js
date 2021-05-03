@@ -1,6 +1,6 @@
-"use strict";
-import { Model } from "sequelize";
-import { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } from "../enum";
+'use strict';
+import { Model } from 'sequelize';
+import { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } from '../enum';
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Todo, {
         foreignKey: {
           allowNull: false,
-          name: "userId",
+          name: 'userId',
         },
       });
     }
@@ -33,22 +33,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "User Name is required" },
+          notNull: { msg: 'User Name is required' },
         },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "Password is required" },
+          notNull: { msg: 'Password is required' },
         },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "Email is required" },
-          isEmail: { msg: "Email should be proper format abc@abc.com" },
+          notNull: { msg: 'Email is required' },
+          isEmail: { msg: 'Email should be proper format abc@abc.com' },
         },
       },
       role: {
@@ -59,19 +59,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "users",
-      modelName: "User",
+      tableName: 'users',
+      modelName: 'User',
       defaultScope: {
-        attributes: { exclude: ["password", "id"] },
+        attributes: { exclude: ['password', 'id'] },
       },
       scopes: {
         withSecretColumns: {
           attributes: {
-            include: ["id", "password"],
+            include: ['id', 'password'],
           },
         },
       },
-    }
+    },
   );
   return User;
 };

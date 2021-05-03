@@ -1,6 +1,7 @@
-"use strict";
-import { Model } from "sequelize";
-import { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } from "../enum";
+'use strict';
+
+import { Model } from 'sequelize';
+import { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } from '../enum';
 
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -13,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, {
         foreignKey: {
           allowNull: false,
-          name: "userId",
-          as: "user",
+          name: 'userId',
+          as: 'user',
         },
       });
     }
@@ -37,14 +38,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "todos",
-      modelName: "Todo",
+      tableName: 'todos',
+      modelName: 'Todo',
       defaultScope: {
         attributes: {
-          exclude: ["userId", "uid"],
+          exclude: ['userId', 'uid'],
         },
       },
-    }
+    },
   );
   return Todo;
 };
