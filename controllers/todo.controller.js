@@ -1,28 +1,28 @@
-const { successResponse, errorResponse } = require("../helpers");
-const { User, Todo } = require("../models");
+import { successResponse, errorResponse } from '../helpers';
+import { Todo } from '../models';
 
-const create = async (req, res) => {
+export const create = async (req, res) => {
   const {
     body: { text },
     user,
   } = req;
 
   try {
-    const todo = await Todo.create({
+    await Todo.create({
       text,
       userId: user.id,
     });
 
-    return res.status(201).json({ msg: "created successfully" });
+    return res.status(201).json({ msg: 'created successfully' });
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
   }
 };
 
-const getAllByUser = async (req, res) => {
+export const getAllByUser = async (req, res) => {
   const { user } = req;
-  //TODO: validate userId
+  // TODO: validate userId
   // console.log(req);
   try {
     const todos = await Todo.findAll({
@@ -32,14 +32,13 @@ const getAllByUser = async (req, res) => {
       // include: [{ model: User, as: "user" }], // FIXME
     });
     return res.json(todos);
-    ƒ;
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
   }
 };
 
-const updateTodo = async (req, res) => {
+export const updateTodo = async (req, res) => {
   const {
     user,
     params: { id: todoId },
@@ -55,7 +54,7 @@ const updateTodo = async (req, res) => {
     });
 
     if (!todo) {
-      return errorResponse(req, res, "Invalid todo id", 404);
+      return errorResponse(req, res, 'Invalid todo id', 404);
     }
 
     if (text) {
@@ -67,10 +66,8 @@ const updateTodo = async (req, res) => {
 
     await todo.save();
 
-    return successResponse(req, res, { msg: "Updated successfully" });
+    return successResponse(req, res, { msg: 'Updated successfully' });
   } catch (error) {
     errorResponse(req, res);
   }
 };
-
-module.exports = { create, getAllByUser, updateTodo };

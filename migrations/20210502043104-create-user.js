@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const { USER_ROLES_ENUM_VALUES, USER_ROLES_ENUM } = require("../enum");
+import { USER_ROLES_ENUM_VALUES, USER_ROLES_ENUM } from '../enum';
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,7 +30,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("Users");
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('Users');
   },
 };
