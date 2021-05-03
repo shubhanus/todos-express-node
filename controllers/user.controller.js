@@ -1,34 +1,58 @@
 const { sequelize, User, Todo } = require("../models");
+const {
+  successResponse,
+  errorResponse,
+  getPasswordHash,
+  getJwtSignedToken,
+} = require("../helpers");
 
-const user = {
-  create: async (req, res) => {
-    const { name, role, password, email } = req.body;
+const create = async (req, res) => {
+  const { name, role, password, email } = req.body;
 
-    try {
-      const user = await User.create({
-        name,
-        role,
-        password,
-        email,
-      });
-      //TODO: check if we can exclude in create queries as well id and password
+  const secretePassword = getPasswordHash(password);
 
-      return res.status(201).json({ id: user.uid });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json(error);
-    }
-  },
-  getAll: async (req, res) => {
-    try {
-      const users = await User.findAll();
-      //TODO: check if we can exclude in create queries as well id and password
-      return res.json(users);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json(error);
-    }
-  },
+  try {
+    const user = await User.create({
+      name,
+      password: secretePassword,
+      email,
+    });
+    //TODO: check if we can exclude in create queries as well id and password
+    return successResponse(req, res, { msg: "User created successfully" }, 201);
+  } catch (error) {
+    errorResponse(req, res);
+  }
 };
 
-module.exports = user;
+const getAll = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    //TODO: check if we can exclude in create queries as well id and password
+    return successResponse(req, res, users);
+  } catch (error) {
+    errorResponse(req, res);
+  }
+};
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.scope("withSecretColumns").findOne({
+      where: { email },
+    });
+    if (!user) {
+      return errorResponse(req, res, "User not exist", 401);
+    }
+    const secretPassword = getPasswordHash(password);
+    if (secretPassword !== user.password) {
+      return errorResponse(req, res, "Incorrect Password", 401);
+    }
+    const token = getJwtSignedToken({ userId: user.id, email: user.email });
+    return successResponse(req, res, { token });
+  } catch (error) {
+    console.log(error);
+    errorResponse(req, res);
+  }
+};
+
+module.exports = { create, getAll, login };

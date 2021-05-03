@@ -1,8 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const enums = require("../enum");
-
-const todoValues = enums.TODO_STATUS_ENUM.getValues();
+const { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } = require("../enum");
 
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -32,9 +30,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM(todoValues),
+        type: DataTypes.ENUM(TODO_STATUS_ENUM_VALUES),
         allowNull: false,
-        defaultValue: todoValues[0],
+        defaultValue: TODO_STATUS_ENUM.todo,
       },
     },
     {
@@ -43,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Todo",
       defaultScope: {
         attributes: {
-          exclude: ["id", "userId", "uid"],
+          exclude: ["userId", "uid"],
         },
       },
     }

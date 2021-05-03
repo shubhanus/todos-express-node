@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } = require("../enum");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
           name: "userId",
         },
       });
+    }
+
+    isAdmin() {
+      return this.role === USER_ROLES_ENUM.admin;
     }
   }
   User.init(
@@ -46,8 +52,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       role: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(USER_ROLES_ENUM_VALUES),
         allowNull: false,
+        defaultValue: USER_ROLES_ENUM.user,
       },
     },
     {
