@@ -1,9 +1,9 @@
-const express = require("express");
-const { sequelize } = require("./models");
-const userController = require("./controllers/user.controller");
-const todoController = require("./controllers/todo.controller");
-const apiAuth = require("./middlewares/apiAuth");
-const adminAuth = require("./middlewares/adminAuth");
+import express from "express";
+import { sequelize } from "./models";
+import * as userController from "./controllers/user.controller";
+import * as todoController from "./controllers/todo.controller";
+import apiAuth from "./middlewares/apiAuth";
+import adminAuth from "./middlewares/adminAuth";
 
 const app = express();
 

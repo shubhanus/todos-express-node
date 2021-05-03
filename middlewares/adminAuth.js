@@ -1,4 +1,4 @@
-const { errorResponse } = require("../helpers");
+import { errorResponse } from "../helpers";
 
 const adminAuth = async (req, res, next) => {
   try {
@@ -11,4 +11,4 @@ const adminAuth = async (req, res, next) => {
   }
 };
 
-module.exports = adminAuth;
+export default adminAuth;

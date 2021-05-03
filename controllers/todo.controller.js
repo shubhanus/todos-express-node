@@ -1,14 +1,14 @@
-const { successResponse, errorResponse } = require("../helpers");
-const { User, Todo } = require("../models");
+import { successResponse, errorResponse } from "../helpers";
+import { Todo } from "../models";
 
-const create = async (req, res) => {
+export const create = async (req, res) => {
   const {
     body: { text },
     user,
   } = req;
 
   try {
-    const todo = await Todo.create({
+    await Todo.create({
       text,
       userId: user.id,
     });
@@ -20,9 +20,9 @@ const create = async (req, res) => {
   }
 };
 
-const getAllByUser = async (req, res) => {
+export const getAllByUser = async (req, res) => {
   const { user } = req;
-  //TODO: validate userId
+  // TODO: validate userId
   // console.log(req);
   try {
     const todos = await Todo.findAll({
@@ -39,7 +39,7 @@ const getAllByUser = async (req, res) => {
   }
 };
 
-const updateTodo = async (req, res) => {
+export const updateTodo = async (req, res) => {
   const {
     user,
     params: { id: todoId },
@@ -72,5 +72,3 @@ const updateTodo = async (req, res) => {
     errorResponse(req, res);
   }
 };
-
-module.exports = { create, getAllByUser, updateTodo };

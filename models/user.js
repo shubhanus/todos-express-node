@@ -1,6 +1,6 @@
 "use strict";
-const { Model } = require("sequelize");
-const { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } = require("../enum");
+import { Model } from "sequelize";
+import { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } from "../enum";
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {

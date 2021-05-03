@@ -1,9 +1,5 @@
-const { User } = require("../models");
-const {
-  successResponse,
-  errorResponse,
-  decodeJwtToken,
-} = require("../helpers");
+import { User } from "../models";
+import { successResponse, errorResponse, decodeJwtToken } from "../helpers";
 
 const apiAuth = async (req, res, next) => {
   const { authorization: token } = req.headers;
@@ -31,4 +27,4 @@ const apiAuth = async (req, res, next) => {
   }
 };
 
-module.exports = apiAuth;
+export default apiAuth;

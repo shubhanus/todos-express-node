@@ -1,5 +1,5 @@
 "use strict";
-const { TODO_STATUS_ENUM_VALUES } = require("../enum");
+import { TODO_STATUS_ENUM_VALUES } from "../enum";
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {

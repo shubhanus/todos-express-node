@@ -1,6 +1,6 @@
 "use strict";
-const { Model } = require("sequelize");
-const { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } = require("../enum");
+import { Model } from "sequelize";
+import { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } from "../enum";
 
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {

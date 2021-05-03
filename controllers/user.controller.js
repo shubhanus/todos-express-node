@@ -1,12 +1,12 @@
-const { sequelize, User, Todo } = require("../models");
-const {
+import { sequelize, User, Todo } from "../models";
+import {
   successResponse,
   errorResponse,
   getPasswordHash,
   getJwtSignedToken,
-} = require("../helpers");
+} from "../helpers";
 
-const create = async (req, res) => {
+export const create = async (req, res) => {
   const { name, role, password, email } = req.body;
 
   const secretePassword = getPasswordHash(password);
@@ -24,7 +24,7 @@ const create = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
     const users = await User.findAll();
     //TODO: check if we can exclude in create queries as well id and password
@@ -34,7 +34,7 @@ const getAll = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.scope("withSecretColumns").findOne({
@@ -54,5 +54,3 @@ const login = async (req, res) => {
     errorResponse(req, res);
   }
 };
-
-module.exports = { create, getAll, login };
