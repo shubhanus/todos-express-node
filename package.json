@@ -2,9 +2,15 @@
   "name": "todo-express-app",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec babel-node ./app.js",
+    "start:debug": "nodemon --inspect --exec babel-node src/app.js",
+    "start": "nodemon --exec babel-node src/app.js",
     "lint": "eslint --fix --ext .js",
-    "prettifyAll": "prettier --write"
+    "prettifyAll": "prettier --write",
+    "dbm": "sequelize db:migrate",
+    "dbmun": "sequelize db:migrate:undo",
+    "dbmunall": "sequelize db:migrate:undo:all",
+    "moc": "sequelize model:create",
+    "mic": "sequelize migration:create"
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
@@ -17,8 +23,10 @@
     "sequelize": "^6.6.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "babel-register": "^6.26.0",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",

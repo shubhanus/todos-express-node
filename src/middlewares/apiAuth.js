@@ -8,7 +8,7 @@ const apiAuth = async (req, res, next) => {
   }
   try {
     const decodedUser = decodeJwtToken(token.split(' ')[1]);
-    const user = await User.scope('withSecretColumns').findOne({
+    const user = await User.findOne({
       where: {
         email: decodedUser.user.email,
       },

@@ -1,7 +1,8 @@
 'use strict';
 
 import { Model } from 'sequelize';
-import { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } from '../enum';
+
+const { TODO_STATUS_ENUM, TODO_STATUS_ENUM_VALUES } = require('../enum');
 
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -22,9 +23,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Todo.init(
     {
-      uid: {
-        type: DataTypes.UUIDV4,
+      id: {
+        type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
       },
       text: {
         type: DataTypes.STRING,

@@ -29,6 +29,7 @@ export const getAllByUser = async (req, res) => {
       where: {
         userId: user.id,
       },
+      order: [['updatedAt', 'ASC']],
       // include: [{ model: User, as: "user" }], // FIXME
     });
     return res.json(todos);

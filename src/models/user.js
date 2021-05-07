@@ -1,6 +1,8 @@
 'use strict';
+
 import { Model } from 'sequelize';
-import { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } from '../enum';
+
+const { USER_ROLES_ENUM, USER_ROLES_ENUM_VALUES } = require('../enum');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -9,13 +11,34 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Todo }) {
+    static associate({ Todo, Profile }) {
       // define association here
       this.hasMany(Todo, {
         foreignKey: {
           allowNull: false,
           name: 'userId',
         },
+      });
+
+      this.hasOne(Profile, {
+        as: 'profile',
+        foreignKey: {
+          allowNull: false,
+          name: 'userId',
+          type: DataTypes.UUID,
+        },
+      });
+
+      this.belongsToMany(User, {
+        as: 'user',
+        foreignKey: 'UserId',
+        through: 'follower',
+      });
+
+      this.belongsToMany(User, {
+        as: 'followed',
+        foreignKey: 'FollowdId',
+        through: 'follower',
       });
     }
 
@@ -25,9 +48,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      uid: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -62,12 +87,12 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'users',
       modelName: 'User',
       defaultScope: {
-        attributes: { exclude: ['password', 'id'] },
+        attributes: { exclude: ['password'] },
       },
       scopes: {
         withSecretColumns: {
           attributes: {
-            include: ['id', 'password'],
+            include: ['password'],
           },
         },
       },
