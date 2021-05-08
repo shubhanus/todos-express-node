@@ -29,5 +29,6 @@ module.exports = {
     'arrow-body-style': 'off',
     strict: 'off',
     'implicit-arrow-linebreak': 'off',
+    'object-curly-newline': "never",
   },
 };

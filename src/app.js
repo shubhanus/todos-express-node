@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { sequelize } from './models';
 import * as userController from './controllers/user.controller';
 import * as todoController from './controllers/todo.controller';
@@ -8,6 +9,7 @@ import adminAuth from './middlewares/adminAuth';
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 
 // Routes

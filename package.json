@@ -10,13 +10,17 @@
     "dbmun": "sequelize db:migrate:undo",
     "dbmunall": "sequelize db:migrate:undo:all",
     "moc": "sequelize model:create",
-    "mic": "sequelize migration:create"
+    "mic": "sequelize migration:create",
+    "seed": "sequelize db:seed:all"
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.14.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-validation": "1.0.2",
+    "joi": "14.3.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.7",
@@ -24,9 +28,11 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/register": "^7.13.16",
+    "@babel/runtime": "^7.14.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "babel-register": "^6.26.0",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
